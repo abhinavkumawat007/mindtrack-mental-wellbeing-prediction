@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindTrack — Mental Health Score Prediction & Insights</title>
+  <meta name="description" content="Predict and understand mental wellbeing scores based on digital media consumption, sleep, physical movement, and perceived stress using production-grade Machine Learning." />
+
+  <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js for data visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ SITE HEADER & NAVIGATION ============ -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          MindTrack <span class="brand-badge">ML 2.0</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-tab active" data-tab="predictor">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+          Check-in
+        </button>
+        <button class="nav-tab" data-tab="insights">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          Insights
+        </button>
+        <button class="nav-tab" data-tab="model">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Model & Metrics
+        </button>
+        <button class="nav-tab" data-tab="history">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          History <span class="nav-count-badge" id="navHistoryCount">0</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="status-pill" id="statusIndicator">
+          <span class="status-dot"></span> Checking API...
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ RESPONSIBLE USE NOTICE BANNER ============ -->
+  <aside class="disclaimer-banner">
+    <div class="container disclaimer-content">
+      <span>
+        <strong>Educational & Predictive Analytics Notice:</strong> MindTrack is a statistical machine learning tool, not a clinical medical diagnostic system.
+      </span>
+      <button class="btn-link open-safety-modal">Crisis Resources & Ethics</button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN APPLICATION VIEWS ============ -->
+  <main class="container">
+
+    <!-- ============ OVERVIEW HERO SECTION ============ -->
+    <section class="overview-hero">
+      <div class="overview-content">
+        <div class="overview-badge-row">
+          <span class="overview-pill">
+            <span class="pulse-dot"></span> Production ML Pipeline • Extra Trees Champion
+          </span>
+          <span class="overview-tag">B.Tech Machine Learning Project</span>
+        </div>
+        <h1 class="overview-headline">Mental Wellbeing Score Prediction & Local Explainability</h1>
+        <p class="overview-lead">
+          MindTrack quantifies multivariate relationships between daily digital habits (screen exposure, phone unlocks) and recovery patterns (sleep, physical movement) to forecast an objective 0–10 wellbeing score with directional feature attributions.
+        </p>
+
+        <div class="hero-stats-row">
+          <div class="hero-stat-badge">
+            <div class="hero-stat-val">0.8552</div>
+            <div class="hero-stat-lbl">Test R² Accuracy</div>
+          </div>
+          <div class="hero-stat-badge">
+            <div class="hero-stat-val">0.5085</div>
+            <div class="hero-stat-lbl">Test RMSE Error</div>
+          </div>
+          <div class="hero-stat-badge">
+            <div class="hero-stat-val">4,998</div>
+            <div class="hero-stat-lbl">Student Cohort</div>
+          </div>
+          <div class="hero-stat-badge">
+            <div class="hero-stat-val" id="heroHistoryCount">0</div>
+            <div class="hero-stat-lbl">Assessments Saved</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 1. PREDICTOR VIEW ==================== -->
+    <section class="view-section active" id="view-predictor">
+      <div class="view-header">
+        <div class="view-eyebrow">Digital Wellbeing Assessment</div>
+        <h1 class="view-title">Evaluate Your Lifestyle & Screen Habits</h1>
+        <p class="view-desc">
+          Enter your daily media consumption, sleep duration, physical activity, and stress indicators.
+          Our trained ensemble model evaluates multivariate factors to estimate your wellbeing score.
+        </p>
+      </div>
+
+      <div class="predictor-grid">
+        <!-- Form Column -->
+        <div class="glass-card">
+          <!-- Presets -->
+          <div class="preset-section">
+            <div class="preset-title">Quick Demo Profiles:</div>
+            <div class="preset-chips">
+              <button type="button" class="preset-btn" data-preset="balanced">🌱 Balanced Student</button>
+              <button type="button" class="preset-btn" data-preset="screen_heavy">📱 High Screen-Time</button>
+              <button type="button" class="preset-btn" data-preset="exam_crunch">📚 Exam Crunch</button>
+              <button type="button" class="preset-btn" data-preset="active_rested">🏃 Active & Rested</button>
+            </div>
+          </div>
+
+          <form id="predictionForm" novalidate>
+
+            <!-- Group 1: Demographics -->
+            <div class="form-group-title">1. Demographics & Background</div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="10" max="100" required />
+                <span class="field-hint">Range: 10 – 100</span>
+              </div>
+              <div class="form-field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" list="topCountriesList" placeholder="e.g. Canada, India, USA" required />
+                <datalist id="topCountriesList">
+                  <option value="India"></option>
+                  <option value="USA"></option>
+                  <option value="Canada"></option>
+                  <option value="Australia"></option>
+                  <option value="UK"></option>
+                  <option value="Germany"></option>
+                  <option value="Mexico"></option>
+                  <option value="Turkey"></option>
+                  <option value="France"></option>
+                  <option value="Other"></option>
+                </datalist>
+                <span class="field-hint">Top cohort countries or 'Other'</span>
+              </div>
+              <div class="form-field">
+                <label for="academic_level">Academic Level</label>
+                <select id="academic_level" name="academic_level" required>
+                  <option value="High School">High School</option>
+                  <option value="Undergraduate" selected>Undergraduate</option>
+                  <option value="Graduate">Graduate</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Group 2: Digital Media Habits -->
+            <div class="form-group-title">2. Screen & Social Media Engagement</div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="most_used_platform">Primary Platform</label>
+                <select id="most_used_platform" name="most_used_platform" required>
+                  <option value="Instagram">Instagram</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Snapchat">Snapchat</option>
+                  <option value="Twitter">Twitter / X</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="WeChat">WeChat</option>
+                  <option value="LINE">LINE</option>
+                  <option value="KakaoTalk">KakaoTalk</option>
+                  <option value="VKontakte">VKontakte</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="purpose_of_use">Primary Purpose</label>
+                <select id="purpose_of_use" name="purpose_of_use" required>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Education">Education</option>
+                  <option value="Networking">Networking</option>
+                  <option value="News">News</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="avg_daily_usage_hours">Daily Screen Usage (Hours)</label>
+                <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" step="0.1" min="0" max="24" required />
+                <span class="field-hint">Peer cohort average: ~5.1 hrs</span>
+              </div>
+              <div class="form-field">
+                <label for="daily_unlocks">Daily Phone Unlocks</label>
+                <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" max="1000" required />
+                <span class="field-hint">Checks/day (Peer avg: ~171)</span>
+              </div>
+            </div>
+
+            <!-- Group 3: Lifestyle & Wellbeing -->
+            <div class="form-group-title">3. Recovery, Movement & Stress</div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="sleep_hours_per_night">Nightly Sleep (Hours)</label>
+                <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" step="0.1" min="0" max="24" required />
+                <span class="field-hint">Recommended: 7.0 – 9.0 hrs</span>
+              </div>
+              <div class="form-field">
+                <label for="stress_level">Perceived Stress Level</label>
+                <select id="stress_level" name="stress_level" required>
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Very High">Very High</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="physical_activity_hours">Daily Physical Activity (Hours)</label>
+                <input type="number" id="physical_activity_hours" name="physical_activity_hours" step="0.1" min="0" max="24" required />
+                <span class="field-hint">Exercise, sports, walking</span>
+              </div>
+              <div class="form-field">
+                <label for="study_hours">Daily Study / Work (Hours)</label>
+                <input type="number" id="study_hours" name="study_hours" step="0.1" min="0" max="24" required />
+                <span class="field-hint">Focused academic/work hours</span>
+              </div>
+            </div>
+
+            <!-- Interactive Ratio Calculator (Key ML Feature) -->
+            <div class="ratio-preview-card" id="ratioPreviewCard">
+              <div class="ratio-preview-header">
+                <span class="ratio-preview-title">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                  Screen-to-Sleep Balance Ratio (Top ML Feature: 16.7%)
+                </span>
+                <span class="ratio-preview-badge" id="ratioPreviewVal">0.45</span>
+              </div>
+              <div class="ratio-bar-track">
+                <div class="ratio-bar-fill" id="ratioBarFill" style="width: 45%;"></div>
+              </div>
+              <div class="ratio-preview-footnote" id="ratioFootnote">
+                Controlled: Screen time is below sleep recovery hours.
+              </div>
+            </div>
+
+            <!-- Form Alert (for clean, inline validation feedback) -->
+            <div class="form-alert" id="formAlert" style="display:none;" role="alert"></div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                <span class="spinner" id="btnSpinner"></span>
+                <span id="btnLabel">Generate Wellbeing Prediction</span>
+              </button>
+              <button type="reset" class="btn btn-secondary">Reset Form</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Results Column -->
+        <div class="glass-card results-card">
+          <!-- Empty State -->
+          <div class="results-empty-state" id="resultsEmpty">
+            <div class="empty-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3>No Prediction Generated Yet</h3>
+            <p style="font-size:0.85rem; max-width: 280px; margin-top: 0.4rem;">
+              Fill in your habits or pick a demo profile above to calculate your estimated wellbeing score.
+            </p>
+          </div>
+
+          <!-- Active Results Content -->
+          <div class="results-content" id="resultsContent">
+            <!-- Score Gauge -->
+            <div class="gauge-wrapper">
+              <svg class="gauge-svg" viewBox="0 0 200 200">
+                <circle class="gauge-bg" cx="100" cy="100" r="90" />
+                <circle class="gauge-progress" id="gaugeProgress" cx="100" cy="100" r="90" />
+              </svg>
+              <div class="gauge-value-box">
+                <div class="gauge-num" id="scoreNum">0.0</div>
+                <div class="gauge-scale">OUT OF 10</div>
+              </div>
+              <div class="tier-badge" id="tierBadge">Balanced / Moderate</div>
+            </div>
+
+            <!-- Interpretation -->
+            <div class="interpretation-text" id="interpretationText">
+              Interpretation details will appear here based on model estimation.
+            </div>
+
+            <!-- Explainability: Influencing Factors -->
+            <div class="factors-title">
+              <span>Factors Contributing to This Prediction</span>
+              <span style="font-size:0.75rem; text-transform:none; color:var(--text-faint);">Directional Impact</span>
+            </div>
+            <div class="factors-list" id="factorsList">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Actionable Recommendations -->
+            <div class="recommendations-container" id="recommendationsContainer">
+              <div class="recommendations-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Empirical Recommendations</span>
+              </div>
+              <ul class="recommendations-list" id="recommendationsList">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+
+            <!-- Predictive Analytics Safeguard Notice -->
+            <div class="result-disclaimer-note">
+              <span>🛡️ <strong>Predictive Analytics Notice:</strong> This score is a statistical machine learning estimate and not a medical or clinical evaluation.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. INSIGHTS & ANALYTICS VIEW ==================== -->
+    <section class="view-section" id="view-insights">
+      <div class="view-header">
+        <div class="view-eyebrow">Cohort Analytics</div>
+        <h2 class="view-title">Population Trends & Feature Relationships</h2>
+        <p class="view-desc">
+          Aggregated insights drawn from 4,998 student participants examining the interplay between digital consumption and mental health indicators.
+        </p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Sample Size</div>
+          <div class="stat-val" id="statTotalCohort">4,998</div>
+          <div class="stat-sub">Cleaned student responses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Mean Wellbeing Score</div>
+          <div class="stat-val" id="statMeanScore">6.23</div>
+          <div class="stat-sub">Cohort scale: 3.6 to 9.4</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Daily Screen Time</div>
+          <div class="stat-val" id="statAvgScreen">5.08h</div>
+          <div class="stat-sub">Social media & device usage</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Nightly Sleep</div>
+          <div class="stat-val" id="statAvgSleep">6.63h</div>
+          <div class="stat-sub">Restorative recovery window</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Global Feature Importance (Tree Weights)</h3>
+            <p class="chart-desc">Relative percentage contribution across all trees in predicting mental wellbeing</p>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="featureChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Perceived Stress vs. Mental Health Score</h3>
+            <p class="chart-desc">Empirical average wellbeing score across self-reported stress tiers (from API)</p>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="stressChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card chart-card-wide">
+          <div class="chart-header">
+            <h3 class="chart-title">Cohort Wellbeing Score Distribution</h3>
+            <p class="chart-desc">Empirical histogram of student mental health scores across 4,998 survey responses</p>
+          </div>
+          <div class="chart-canvas-box">
+            <canvas id="distributionChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Findings Cards -->
+      <div class="findings-grid">
+        <div class="finding-card">
+          <h4 class="finding-title">1. Screen-to-Sleep Ratio Dominance</h4>
+          <p class="finding-text">
+            The engineered ratio between screen usage and sleep duration emerged as the #1 predictive factor (16.7% weight). Students whose daily phone time exceeded nightly sleep experienced steep declines in emotional resilience.
+          </p>
+        </div>
+        <div class="finding-card">
+          <h4 class="finding-title">2. Strong Negative Correlation with Screen Time</h4>
+          <p class="finding-text">
+            Average daily usage demonstrates a high negative Pearson correlation (r = -0.82). Every additional hour above 5.0h daily corresponds to an average 0.22 point drop in estimated wellbeing.
+          </p>
+        </div>
+        <div class="finding-card">
+          <h4 class="finding-title">3. Sleep as a Protective Resilience Buffer</h4>
+          <p class="finding-text">
+            Nightly sleep of 7.5+ hours (r = +0.77) serves as the strongest positive lifestyle factor, mitigating moderate stress levels and helping maintain stable mood equilibrium.
+          </p>
+        </div>
+        <div class="finding-card">
+          <h4 class="finding-title">4. Phone Unlocks & Attention Fragmentation</h4>
+          <p class="finding-text">
+            High unlocking frequency (>180 checks/day) signals cognitive fragmentation, correlating directly with reported high stress independent of total hours spent.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. MODEL & METRICS VIEW ==================== -->
+    <section class="view-section" id="view-model">
+      <div class="view-header">
+        <div class="view-eyebrow">Production Machine Learning</div>
+        <h2 class="view-title">Model Benchmarks & Cross-Validation Diagnostics</h2>
+        <p class="view-desc">
+          Rigorous 5-fold cross-validation comparison across 5 candidate regression algorithms to select the champion model.
+        </p>
+      </div>
+
+      <!-- Champion Banner -->
+      <div class="champion-card">
+        <div class="champion-header">
+          <div>
+            <span class="champion-tag">★ Champion Model Selected</span>
+            <h2 style="font-size:1.4rem; margin-top:0.4rem;" id="champModelName">Extra Trees Regressor</h2>
+          </div>
+          <div style="font-size:0.85rem; color:#9ca3af; text-align:right;">
+            Trained on 3,998 samples · Tested on 1,000 samples
+          </div>
+        </div>
+
+        <p style="font-size:0.9rem; color:#d1d5db; line-height:1.5;" id="champRationale">
+          Extra Trees achieved the strongest predictive accuracy across 5-fold cross-validation with an R² of 0.8552 and RMSE of 0.5085. It captures non-linear lifestyle interactions effectively while maintaining a compact artifact size (3.1 MB) and robust generalization.
+        </p>
+
+        <div class="metrics-row">
+          <div class="metric-pill">
+            <div class="metric-title">Test R² Score</div>
+            <div class="metric-num" id="metricR2">0.8552</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-title">Test RMSE</div>
+            <div class="metric-num" id="metricRMSE">0.5085</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-title">Test MAE</div>
+            <div class="metric-num" id="metricMAE">0.3875</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-title">5-Fold CV R² (Mean)</div>
+            <div class="metric-num" id="metricCVR2">0.8372</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Model Comparison Table -->
+      <div class="table-card">
+        <h3 style="margin-bottom:1rem; font-size:1.1rem;">Candidate Models Cross-Validation Comparison</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Model Algorithm</th>
+              <th>CV MAE</th>
+              <th>CV RMSE</th>
+              <th>CV R²</th>
+              <th>Test Set R²</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== 4. HISTORY VIEW ==================== -->
+    <section class="view-section" id="view-history">
+      <div class="view-header">
+        <div class="view-eyebrow">Local & Cloud Persistence</div>
+        <h2 class="view-title">Recent Prediction History</h2>
+        <p class="view-desc">
+          Records of recent lifestyle assessments with dual storage support (MongoDB with automatic SQLite fallback).
+        </p>
+      </div>
+
+      <div class="history-controls">
+        <div class="history-filters-wrap">
+          <div class="history-search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="historySearchInput" class="history-search-input" placeholder="Search country, platform, or tier..." aria-label="Search history" />
+          </div>
+          <select id="historyFilterStress" class="history-filter-select" aria-label="Filter by stress tier">
+            <option value="ALL">All Stress Tiers</option>
+            <option value="Low">Low Stress</option>
+            <option value="Medium">Medium Stress</option>
+            <option value="High">High Stress</option>
+            <option value="Very High">Very High Stress</option>
+          </select>
+        </div>
+        <div class="history-actions-wrap">
+          <span class="history-count-badge" id="historyCountBadge">0 assessments</span>
+          <button class="btn btn-secondary btn-small" id="clearHistoryBtn">Clear History</button>
+        </div>
+      </div>
+
+      <div class="history-table-box">
+        <div id="historyEmptyState" style="text-align:center; padding:3rem 1rem; color:var(--text-faint); display:none;">
+          No previous predictions recorded yet. Run a check-in to see your history here.
+        </div>
+        <table class="comparison-table" id="historyTable">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Demographics</th>
+              <th>Screen & Sleep</th>
+              <th>Stress Level</th>
+              <th>Score & Tier</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ SAFETY & ETHICS MODAL ============ -->
+  <div class="modal-overlay" id="safetyModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Responsible Use & Ethical Guidelines</h3>
+        <button class="btn-close-modal" id="closeSafetyBtn">&times;</button>
+      </div>
+
+      <p style="font-size:0.9rem; line-height:1.55; color:#d1d5db;">
+        MindTrack was engineered as an educational machine learning demonstration using survey data from student cohorts. It operates on self-reported lifestyle metrics and statistical models.
+      </p>
+
+      <div class="helpline-box">
+        <h4>Need Immediate Support?</h4>
+        <p style="font-size:0.82rem; color:#e0e7ff; margin-bottom:0.6rem;">
+          If you or someone you know is struggling or in crisis, help is available. You are not alone.
+        </p>
+        <ul class="helpline-list">
+          <li>• <strong>United States & Canada:</strong> Call or text <strong>988</strong> (Suicide & Crisis Lifeline, 24/7 free & confidential)</li>
+          <li>• <strong>Crisis Text Line:</strong> Text <strong>HOME</strong> to <strong>741741</strong></li>
+          <li>• <strong>United Kingdom:</strong> Call <strong>111</strong> (NHS) or <strong>116 123</strong> (Samaritans)</li>
+          <li>• <strong>International:</strong> Visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> or <a href="https://www.befrienders.org" target="_blank" rel="noopener">befrienders.org</a></li>
+        </ul>
+      </div>
+
+      <h4 style="font-size:0.95rem; margin-top:1rem; color:#ffffff;">Privacy Commitment</h4>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.3rem;">
+        We do not collect names, email addresses, IP addresses, or tracking identifiers. All stored check-in records are anonymized and can be erased at any time using the "Clear History" button.
+      </p>
+
+      <button class="btn btn-primary" style="margin-top:1.5rem; width:100%;" onclick="document.getElementById('safetyModal').classList.remove('active')">
+        I Understand
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ SITE FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div style="color:var(--text-faint);">
+        &copy; 2026 MindTrack — Mental Health Score Prediction & Insights. Production Machine Learning.
+      </div>
+      <div class="footer-links">
+        <a href="#" class="open-safety-modal">Ethical Use & Safety</a>
+        <a href="/docs" target="_blank">FastAPI Swagger Docs</a>
+        <a href="/redoc" target="_blank">ReDoc</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

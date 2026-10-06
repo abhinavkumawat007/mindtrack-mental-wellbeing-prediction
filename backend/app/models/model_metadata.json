@@ -1,0 +1,188 @@
+{
+  "project_name": "MindTrack \u2014 Mental Health Score Prediction & Insights",
+  "trained_at": "2026-09-28T11:05:33.466382+00:00",
+  "model_name": "Extra Trees",
+  "selection_rationale": "Extra Trees achieved the strongest predictive accuracy across 5-fold cross-validation with an R\u00b2 score of 0.8552 and RMSE of 0.5085. It captures non-linear lifestyle interactions effectively while maintaining a compact artifact size and robust generalization against overfitting.",
+  "metrics": {
+    "mae": 0.3875,
+    "mse": 0.2585,
+    "rmse": 0.5085,
+    "r2": 0.8552,
+    "cv_r2_mean": 0.8372,
+    "cv_rmse_mean": 0.51
+  },
+  "train_samples": 3998,
+  "test_samples": 1000,
+  "total_samples": 4998,
+  "dataset_summary": {
+    "total_samples": 4998,
+    "score_mean": 6.23,
+    "score_median": 6.1,
+    "score_std": 1.28,
+    "score_min": 3.6,
+    "score_max": 9.4,
+    "feature_averages": {
+      "Avg_Daily_Usage_Hours": 5.08,
+      "Daily_Unlocks": 171.5,
+      "Sleep_Hours_Per_Night": 6.63,
+      "Study_Hours": 3.01,
+      "Physical_Activity_Hours": 1.75,
+      "Age": 20.8
+    },
+    "stress_distribution": {
+      "Very High": 1621,
+      "High": 1439,
+      "Medium": 1295,
+      "Low": 643
+    },
+    "platform_distribution": {
+      "Instagram": 1130,
+      "TikTok": 918,
+      "Facebook": 719,
+      "LinkedIn": 522,
+      "YouTube": 491,
+      "Twitter": 462,
+      "Snapchat": 419,
+      "WhatsApp": 175
+    },
+    "stress_score_averages": {
+      "Low": 7.84,
+      "Medium": 7.14,
+      "High": 6.03,
+      "Very High": 5.05
+    },
+    "score_distribution": {
+      "<4": 117,
+      "4-5": 1082,
+      "5-6": 1293,
+      "6-7": 1234,
+      "7-8": 807,
+      "8-9": 445,
+      "9-10": 20
+    }
+  },
+  "feature_importances": [
+    {
+      "feature": "Screen_to_Sleep_Ratio",
+      "importance": 0.1669
+    },
+    {
+      "feature": "Avg_Daily_Usage_Hours",
+      "importance": 0.1537
+    },
+    {
+      "feature": "Stress_Level",
+      "importance": 0.1462
+    },
+    {
+      "feature": "Sleep_Hours_Per_Night",
+      "importance": 0.1157
+    },
+    {
+      "feature": "Daily_Unlocks",
+      "importance": 0.1046
+    },
+    {
+      "feature": "Active_to_Sedentary_Ratio",
+      "importance": 0.0865
+    },
+    {
+      "feature": "Study_Hours",
+      "importance": 0.0714
+    },
+    {
+      "feature": "Grouped_Country",
+      "importance": 0.034
+    },
+    {
+      "feature": "Most_Used_Platform",
+      "importance": 0.0313
+    },
+    {
+      "feature": "Unlocks_Per_Usage_Hour",
+      "importance": 0.0274
+    },
+    {
+      "feature": "Physical_Activity_Hours",
+      "importance": 0.0166
+    },
+    {
+      "feature": "Purpose_Of_Use",
+      "importance": 0.014
+    },
+    {
+      "feature": "Academic_Level",
+      "importance": 0.0137
+    },
+    {
+      "feature": "Gender",
+      "importance": 0.0102
+    },
+    {
+      "feature": "Age",
+      "importance": 0.0078
+    }
+  ],
+  "model_comparison": [
+    {
+      "model_name": "Extra Trees",
+      "cv_mae": 0.3907,
+      "cv_mse": 0.2601,
+      "cv_rmse": 0.51,
+      "cv_r2": 0.8372,
+      "test_mae": 0.3875,
+      "test_mse": 0.2585,
+      "test_rmse": 0.5085,
+      "test_r2": 0.8552,
+      "selected": true
+    },
+    {
+      "model_name": "Random Forest",
+      "cv_mae": 0.4056,
+      "cv_mse": 0.2746,
+      "cv_rmse": 0.524,
+      "cv_r2": 0.828,
+      "test_mae": 0.4056,
+      "test_mse": 0.2784,
+      "test_rmse": 0.5276,
+      "test_r2": 0.8441,
+      "selected": false
+    },
+    {
+      "model_name": "Gradient Boosting",
+      "cv_mae": 0.4361,
+      "cv_mse": 0.3154,
+      "cv_rmse": 0.5616,
+      "cv_r2": 0.8024,
+      "test_mae": 0.4401,
+      "test_mse": 0.3185,
+      "test_rmse": 0.5643,
+      "test_r2": 0.8216,
+      "selected": false
+    },
+    {
+      "model_name": "Ridge Regression",
+      "cv_mae": 0.5218,
+      "cv_mse": 0.4318,
+      "cv_rmse": 0.6571,
+      "cv_r2": 0.7293,
+      "test_mae": 0.5328,
+      "test_mse": 0.4544,
+      "test_rmse": 0.6741,
+      "test_r2": 0.7454,
+      "selected": false
+    },
+    {
+      "model_name": "Linear Regression",
+      "cv_mae": 0.5218,
+      "cv_mse": 0.4319,
+      "cv_rmse": 0.6572,
+      "cv_r2": 0.7293,
+      "test_mae": 0.533,
+      "test_mse": 0.4547,
+      "test_rmse": 0.6743,
+      "test_r2": 0.7453,
+      "selected": false
+    }
+  ]
+}

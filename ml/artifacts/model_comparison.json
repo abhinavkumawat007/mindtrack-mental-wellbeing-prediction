@@ -1,0 +1,62 @@
+[
+  {
+    "model_name": "Extra Trees",
+    "cv_mae": 0.3907,
+    "cv_mse": 0.2601,
+    "cv_rmse": 0.51,
+    "cv_r2": 0.8372,
+    "test_mae": 0.3875,
+    "test_mse": 0.2585,
+    "test_rmse": 0.5085,
+    "test_r2": 0.8552,
+    "selected": true
+  },
+  {
+    "model_name": "Random Forest",
+    "cv_mae": 0.4056,
+    "cv_mse": 0.2746,
+    "cv_rmse": 0.524,
+    "cv_r2": 0.828,
+    "test_mae": 0.4056,
+    "test_mse": 0.2784,
+    "test_rmse": 0.5276,
+    "test_r2": 0.8441,
+    "selected": false
+  },
+  {
+    "model_name": "Gradient Boosting",
+    "cv_mae": 0.4361,
+    "cv_mse": 0.3154,
+    "cv_rmse": 0.5616,
+    "cv_r2": 0.8024,
+    "test_mae": 0.4401,
+    "test_mse": 0.3185,
+    "test_rmse": 0.5643,
+    "test_r2": 0.8216,
+    "selected": false
+  },
+  {
+    "model_name": "Ridge Regression",
+    "cv_mae": 0.5218,
+    "cv_mse": 0.4318,
+    "cv_rmse": 0.6571,
+    "cv_r2": 0.7293,
+    "test_mae": 0.5328,
+    "test_mse": 0.4544,
+    "test_rmse": 0.6741,
+    "test_r2": 0.7454,
+    "selected": false
+  },
+  {
+    "model_name": "Linear Regression",
+    "cv_mae": 0.5218,
+    "cv_mse": 0.4319,
+    "cv_rmse": 0.6572,
+    "cv_r2": 0.7293,
+    "test_mae": 0.533,
+    "test_mse": 0.4547,
+    "test_rmse": 0.6743,
+    "test_r2": 0.7453,
+    "selected": false
+  }
+]
